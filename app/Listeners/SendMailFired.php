@@ -24,6 +24,10 @@ class SendMailFired
      */
     public function handle(SendMail $event): void
     {
-        //
+        $user = User::find($event->userId)->toArray();
+        Mail::send('eventmail',$user,function($message) use ($user){
+            $message->to($user['email']);
+            $message->subject('Testing Mail..');
+        });
     }
 }
